@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinate Plane</title>
+</head>
+<style>
+  body {
+    margin-top: 100px;
+    background-color: white;
+    font-family: Arial, sans-serif;
+    background-image: 
+        url('https://th.bing.com/th/id/R.045d6f862bb4d08a796c9aecae073510?rik=SNVHrM7xZPwFMw&riu=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2f6%2f65%2fBlue_morpho_butterfly.jpg&ehk=RKffs%2b%2fd7FQuMNO4DOmzCr2uf7HcvlBE7H6wMGGu3M0%3d&risl=&pid=ImgRaw&r=0'),
+        url('https://th.bing.com/th/id/OIP.OBrDySV-MMv2JR8Ctvm8_gHaF8?pid=ImgDet&rs=1'),
+        url('https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/7926670/butterfly-clipart-md.png'),
+        url('https://th.bing.com/th/id/R.21479af555a8d87d58c75f79161f8ef6?rik=SiiSbNzpS7ELHA&riu=http%3a%2f%2fclipart-library.com%2fimg%2f2031178.png&ehk=PliQD%2fTT1U7IBYzlkl0dWAYF42yYCTa9wDwgDdt5jnA%3d&risl=&pid=ImgRaw&r=0');
+    background-position: left 5% top 5%, right 5% top 5%, left 5% bottom 5%, right 5% bottom 5%;
+    background-repeat: no-repeat;
+    background-size: 10%, 10%, 8%, 8%; /* Adjust sizes as desired */
+}
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #cb2fb4;
+    }
+    canvas {
+        border: 1px solid black;
+        display: block;
+        margin: 20px auto;
+    }
+</style>
+<body>
+    <h1>أ. ابتسام محمد زين</h1>
+    <canvas id="coordinatePlane" width="500" height="500"></canvas>
+    <script>
+        window.onload = function() {
+            const canvas = document.getElementById('coordinatePlane');
+            const ctx = canvas.getContext('2d');
+
+            const width = canvas.width;
+            const height = canvas.height;
+            const step = 50; // grid step
+
+            // Load a random image for display on click
+            const images = [
+                'https://th.bing.com/th/id/R.045d6f862bb4d08a796c9aecae073510?rik=SNVHrM7xZPwFMw&riu=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2f6%2f65%2fBlue_morpho_butterfly.jpg&ehk=RKffs%2b%2fd7FQuMNO4DOmzCr2uf7HcvlBE7H6wMGGu3M0%3d&risl=&pid=ImgRaw&r=0',
+                // Add other image URLs here
+            ].map(src => {
+                const img = new Image();
+                img.src = src;
+                return img;
+            });
+
+            function drawGrid() {
+                ctx.strokeStyle = '#aaa';
+                for (let i = 0; i <= width; i += step) {
+                    ctx.beginPath();
+                    ctx.moveTo(i, 0);
+                    ctx.lineTo(i, height);
+                    ctx.stroke();
+                    ctx.fillText((i / step) + 1, i, height / 2 + 15);  // X axis labels
+
+                    ctx.beginPath();
+                    ctx.moveTo(0, i);
+                    ctx.lineTo(width, i);
+                    ctx.stroke();
+                    if (i !== height / 2) {
+                        ctx.fillText((height / step) - (i / step) + 1, width / 2 + 5, i);  // Y axis labels
+                    }
+                }
+                // Draw axes in the middle (optional)
+                ctx.beginPath();
+                ctx.strokeStyle = 'black';
+                ctx.moveTo(width / 2, 0);
+                ctx.lineTo(width / 2, height);
+                ctx.moveTo(0, height / 2);
+                ctx.lineTo(width, height / 2);
+                ctx.stroke();
+            }
+
+            function showCoordinates(event) {
+                const rect = canvas.getBoundingClientRect();
+                const x = Math.round((event.clientX - rect.left) / step) * step;
+                const y = Math.round((event.clientY - rect.top) / step) * step;
+
+                // Clear previous images and texts
+                ctx.clearRect(0, 0, width, height);
+                drawGrid();  // Redraw grid
+
+                const img = images[Math.floor(Math.random() * images.length)]; // Pick a random image
+                ctx.drawImage(img, x, y, 50, 50);  // Draw image at clicked coordinates
+
+                ctx.fillStyle = "red";
+                ctx.font = "bold 12px Arial";
+                ctx.fillText(`(${(x / step) + 1}, ${(height / step) - (y / step) + 1})`, x + 60, y + 25);  // Show coordinates next to the image
+            }
+    
+            drawGrid();
+            canvas.addEventListener('click', showCoordinates);
+        };
+    </script>
+</body>
+</html>
