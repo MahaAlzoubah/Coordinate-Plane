@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أنواع الزوايا</title>
+</head>
+<style>
+       body {
+      margin-top: 100px;
+      background-color: white;
+      font-family: Arial, sans-serif;
+      background-image: 
+          url('https://th.bing.com/th/id/R.045d6f862bb4d08a796c9aecae073510?rik=SNVHrM7xZPwFMw&riu=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2f6%2f65%2fBlue_morpho_butterfly.jpg&ehk=RKffs%2b%2fd7FQuMNO4DOmzCr2uf7HcvlBE7H6wMGGu3M0%3d&risl=&pid=ImgRaw&r=0'),
+          url('https://th.bing.com/th/id/OIP.OBrDySV-MMv2JR8Ctvm8_gHaF8?pid=ImgDet&rs=1'),
+          url('https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/7926670/butterfly-clipart-md.png'),
+          url('https://th.bing.com/th/id/R.21479af555a8d87d58c75f79161f8ef6?rik=SiiSbNzpS7ELHA&riu=http%3a%2f%2fclipart-library.com%2fimg%2f2031178.png&ehk=PliQD%2fTT1U7IBYzlkl0dWAYF42yYCTa9wDwgDdt5jnA%3d&risl=&pid=ImgRaw&r=0');
+      background-position: left 5% top 5%, right 5% top 5%, left 5% bottom 5%, right 5% bottom 5%;
+      background-repeat: no-repeat;
+      background-size: 10%, 10%, 8%, 8%; /* Adjust sizes as desired */
+  }
+    h1, h3 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #cb2fb4;
+    }
+
+  button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #cb2fb4;
+      color: white;
+      border: none;
+  }
+    canvas {
+        border: 1px solid black;
+        display: block;
+        margin: 20px auto;
+    }
+    .angle-display {
+        text-align: center;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+    /* Mobile View */
+    @media (max-width: 600px) {
+        body {
+            margin-top: 20px;
+        }
+        h1 {
+            font-size: 16px;
+        }
+        canvas {
+            width: 100%;
+            height: auto;
+            margin: 10px auto;
+        }
+    }
+</style>
+
+<body>
+    <h1>درس أنواع الزوايا</h1>
+    <canvas id="angleCanvas" width="500" height="500"></canvas>
+    <div class="angle-display" id="angleInfo">الزاوية: 90° - زاوية قائمة</div>
+    <h3>أ. ابتسام محمد زين</h3>
+    <button onclick="prevLesson()">الدرس السابق</button>
+
+    <script>
+        const canvas = document.getElementById('angleCanvas');
+        const ctx = canvas.getContext('2d');
+        const origin = { x: canvas.width / 2, y: canvas.height / 2 };
+        const armLength = 150;
+        let angle = Math.PI / 2; // Starting angle 90 degrees
+
+        canvas.addEventListener('mousemove', function(event) {
+            adjustAngle(event);
+        });
+
+        prevLesson = function() {
+            window.location.href = "index.html";
+        }
+
+        function drawAngle() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.moveTo(origin.x, origin.y);
+            ctx.lineTo(origin.x + armLength * Math.cos(angle), origin.y - armLength * Math.sin(angle));
+            ctx.moveTo(origin.x, origin.y);
+            ctx.lineTo(origin.x + armLength, origin.y);  // Fixed arm along the x-axis
+            ctx.stroke();
+
+            // Draw the arc for the angle
+            ctx.beginPath();
+            ctx.arc(origin.x, origin.y, 50, 0, angle, false);
+            ctx.stroke();
+
+            // Display the angle in degrees and classify
+            let angleDegrees = (angle * 180 / Math.PI).toFixed(0); // Rounded to integer
+            let angleType = classifyAngle(angleDegrees);
+            document.getElementById('angleInfo').innerText = `الزاوية: ${angleDegrees}° - ${angleType}`;
+        }
+
+        function classifyAngle(degrees) {
+            if (degrees == 90) {
+                return "زاوية قائمة";
+            } else if (degrees < 90) {
+                return "زاوية حادة";
+            } else {
+                return "زاوية منفرجة";
+            }
+        }
+
+        function adjustAngle(event) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+            const dx = mouseX - origin.x;
+            const dy = origin.y - mouseY;
+
+            let newAngle = Math.atan2(dy, dx);
+            newAngle = newAngle < 0 ? 2 * Math.PI + newAngle : newAngle; // Normalize the angle between 0 and 360
+            newAngle = Math.min(Math.max(newAngle, 0), Math.PI); // Limit angle between 0 and 180 degrees
+
+            angle = newAngle;
+            drawAngle();
+        }
+
+        window.onload = drawAngle;
+    </script>
+</body>
+</html>

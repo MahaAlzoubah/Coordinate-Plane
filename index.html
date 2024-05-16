@@ -30,6 +30,14 @@
       display: block;
       margin: 20px auto;
   }
+  button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #cb2fb4;
+      color: white;
+      border: none;
+  }
   
   /* Mobile View */
   @media (max-width: 600px) {
@@ -51,7 +59,12 @@
     <h1>درس المستوى الإحداثي</h1>
     <canvas id="coordinatePlane" width="500" height="500"></canvas>
     <h3>أ. ابتسام محمد زين</h3>
+    <button onclick="nextLesson()">الدرس الثاني</button>
     <script>
+
+nextLesson = () => {
+    window.location.href = "index2.html";
+}
         window.onload = function() {
             const canvas = document.getElementById('coordinatePlane');
             const ctx = canvas.getContext('2d');
