@@ -6,34 +6,51 @@
     <title>Coordinate Plane</title>
 </head>
 <style>
-  body {
-    margin-top: 100px;
-    background-color: white;
-    font-family: Arial, sans-serif;
-    background-image: 
-        url('https://th.bing.com/th/id/R.045d6f862bb4d08a796c9aecae073510?rik=SNVHrM7xZPwFMw&riu=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2f6%2f65%2fBlue_morpho_butterfly.jpg&ehk=RKffs%2b%2fd7FQuMNO4DOmzCr2uf7HcvlBE7H6wMGGu3M0%3d&risl=&pid=ImgRaw&r=0'),
-        url('https://th.bing.com/th/id/OIP.OBrDySV-MMv2JR8Ctvm8_gHaF8?pid=ImgDet&rs=1'),
-        url('https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/7926670/butterfly-clipart-md.png'),
-        url('https://th.bing.com/th/id/R.21479af555a8d87d58c75f79161f8ef6?rik=SiiSbNzpS7ELHA&riu=http%3a%2f%2fclipart-library.com%2fimg%2f2031178.png&ehk=PliQD%2fTT1U7IBYzlkl0dWAYF42yYCTa9wDwgDdt5jnA%3d&risl=&pid=ImgRaw&r=0');
-    background-position: left 5% top 5%, right 5% top 5%, left 5% bottom 5%, right 5% bottom 5%;
-    background-repeat: no-repeat;
-    background-size: 10%, 10%, 8%, 8%; /* Adjust sizes as desired */
-}
-
-    h1 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: #cb2fb4;
-    }
-    canvas {
-        border: 1px solid black;
-        display: block;
-        margin: 20px auto;
-    }
-</style>
+    body {
+      margin-top: 100px;
+      background-color: white;
+      font-family: Arial, sans-serif;
+      background-image: 
+          url('https://th.bing.com/th/id/R.045d6f862bb4d08a796c9aecae073510?rik=SNVHrM7xZPwFMw&riu=http%3a%2f%2fupload.wikimedia.org%2fwikipedia%2fcommons%2f6%2f65%2fBlue_morpho_butterfly.jpg&ehk=RKffs%2b%2fd7FQuMNO4DOmzCr2uf7HcvlBE7H6wMGGu3M0%3d&risl=&pid=ImgRaw&r=0'),
+          url('https://th.bing.com/th/id/OIP.OBrDySV-MMv2JR8Ctvm8_gHaF8?pid=ImgDet&rs=1'),
+          url('https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/7926670/butterfly-clipart-md.png'),
+          url('https://th.bing.com/th/id/R.21479af555a8d87d58c75f79161f8ef6?rik=SiiSbNzpS7ELHA&riu=http%3a%2f%2fclipart-library.com%2fimg%2f2031178.png&ehk=PliQD%2fTT1U7IBYzlkl0dWAYF42yYCTa9wDwgDdt5jnA%3d&risl=&pid=ImgRaw&r=0');
+      background-position: left 5% top 5%, right 5% top 5%, left 5% bottom 5%, right 5% bottom 5%;
+      background-repeat: no-repeat;
+      background-size: 10%, 10%, 8%, 8%; /* Adjust sizes as desired */
+  }
+  
+  h1, h3 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #cb2fb4;
+  }
+  canvas {
+      border: 1px solid black;
+      display: block;
+      margin: 20px auto;
+  }
+  
+  /* Mobile View */
+  @media (max-width: 600px) {
+      body {
+          margin-top: 100px;
+      }
+      h1 {
+          font-size: 16px;
+      }
+      canvas {
+          width: 80%;
+          height: auto;
+          margin: 10px auto;
+      }
+  }
+  </style>
+  
 <body>
-    <h1>أ. ابتسام محمد زين</h1>
+    <h1>المستوى الأحداثي</h1>
     <canvas id="coordinatePlane" width="500" height="500"></canvas>
+    <h3>أ. ابتسام محمد زين</h3>
     <script>
         window.onload = function() {
             const canvas = document.getElementById('coordinatePlane');
@@ -78,6 +95,14 @@
                 ctx.moveTo(0, height / 2);
                 ctx.lineTo(width, height / 2);
                 ctx.stroke();
+
+                // Add quadrant labels
+                ctx.font = "20px Arial";
+                ctx.fillStyle = "black";
+                ctx.fillText("الربع الأول", width * 3/4, height / 4);
+                ctx.fillText("الربع الثاني", width / 4, height / 4);
+                ctx.fillText("الربع الثالث", width / 4, height * 3/4);
+                ctx.fillText("الربع الرابع", width * 3/4, height * 3/4);
             }
 
             function showCoordinates(event) {
