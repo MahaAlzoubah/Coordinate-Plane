@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أنواع الزوايا</title>
+    <title>أنواع الزوايا - أ. ابتسام </title>
 </head>
 <style>
        body {
@@ -27,11 +27,16 @@
 
   button {
       display: block;
-      margin: 20px auto;
       padding: 10px 20px;
       background-color: #cb2fb4;
       color: white;
       border: none;
+      cursor: pointer;
+  }
+  a{
+    color: white;
+    text-decoration: none;
+      padding: 10px 20px;
   }
     canvas {
         border: 1px solid black;
@@ -41,7 +46,13 @@
     .angle-display {
         text-align: center;
         font-size: 18px;
-        margin-top: 10px;
+        margin-top: 1px;
+    }
+    .buttons{
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-left: 40px;
     }
     /* Mobile View */
     @media (max-width: 600px) {
@@ -64,7 +75,11 @@
     <canvas id="angleCanvas" width="500" height="500"></canvas>
     <div class="angle-display" id="angleInfo">الزاوية: 90° - زاوية قائمة</div>
     <h3>أ. ابتسام محمد زين</h3>
+    <div class="buttons">
     <button onclick="prevLesson()">الدرس السابق</button>
+    <button><a href="https://kahoot.it/challenge/05258875?challenge-id=f64c4316-cd04-4208-9edf-5a1bfb5e68dd_1715878045778"> نشاط</a> </button>
+    <button onclick="downloadFile()">تحميل الشرح</button>
+    </div>
 
     <script>
         const canvas = document.getElementById('angleCanvas');
@@ -79,6 +94,15 @@
 
         prevLesson = function() {
             window.location.href = "index.html";
+        }
+
+        downloadFile = () => {
+            const link = document.createElement('a');
+            link.href = 'ex2.pdf'; // Assuming the file is in the same directory as the HTML file
+            link.download = 'ex2.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function drawAngle() {
